@@ -1,88 +1,36 @@
-package com.college.entities;
+package com.college.dtos;
 
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import com.college.entities.FacultyPaper;
+import com.college.entities.Subject;
 
-@Entity
-@Table(name = "STAFF")
-public class Staff {
+public class FacultyDTO {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int employeeId;
-
-	@Column(length = 20)
 	private String firstName;
-
-	@Column(length = 20)
 	private String middleName;
-
-	@Column(length = 20)
 	private String lastName;
-
-	@Column(unique = true)
 	private String email;
-
-	@Column(length = 1024)
 	private String password;
-
-	@Temporal(TemporalType.DATE)
 	private Date dob;
-
 	private double workExperience;
-
 	private int noOfPaperPublished;
-
-	@Temporal(TemporalType.DATE)
 	private Date hireDate;
-
 	private String contactNo;
-
 	private String gender;
-
 	private double salary;
-
-	// One faculty can publish more than one Paper.
-//	@JsonIgnore
-	@OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<FacultyPaper> facultyPapers;
-
-	// One FACULTY can Teach more than one SUBJECT and similarly one SUBJECT can be
-	// taught by more than one FACULTY
-	// i.e. MANY TO MANY relation
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "tutorial_tags", joinColumns = { @JoinColumn(name = "faculty_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "subject_id") })
 	private List<Subject> subjects;
-	
-	@ManyToOne
-	private Department department;
 
-	// CONTRUCTORS
-
-	public Staff() {
+	public FacultyDTO() {
 		super();
 	}
 
-	public Staff(int employeeId, String firstName, String middleName, String lastName, String email, String password,
-			Date dob, double workExperience, int noOfPaperPublished, Date hireDate, String contactNo, String gender,
-			double salary, List<FacultyPaper> facultyPapers, List<Subject> subjects) {
+	public FacultyDTO(int employeeId, String firstName, String middleName, String lastName, String email,
+			String password, Date dob, double workExperience, int noOfPaperPublished, Date hireDate, String contactNo,
+			String gender, double salary, List<FacultyPaper> facultyPapers, List<Subject> subjects) {
 		this.employeeId = employeeId;
 		this.firstName = firstName;
 		this.middleName = middleName;
@@ -220,30 +168,12 @@ public class Staff {
 		this.subjects = subjects;
 	}
 
-	// add and remove subject method
-	public void addSubject(Subject subject) {
-		subjects.add(subject);
-	}
-
-	public void removeSubject(Subject subject) {
-		subjects.remove(subject);
-	}
-
-	// add and remove paper method
-	public void addPaper(FacultyPaper paper) {
-		facultyPapers.add(paper);
-	}
-
-	public void removePaper(FacultyPaper paper) {
-		facultyPapers.remove(paper);
-	}
-
 	@Override
 	public String toString() {
 		return String.format(
-				"Staff [employeeId=%s, firstName=%s, middleName=%s, lastName=%s, email=%s, password=%s, dob=%s, workExperience=%s, noOfPaperPublished=%s, hireDate=%s, contactNo=%s, gender=%s, salary=%s, facultyPapers=%s, subjects=%s]",
-				employeeId, firstName, middleName, lastName, email, password, dob, workExperience, noOfPaperPublished,
-				hireDate, contactNo, gender, salary, facultyPapers, subjects);
+				"FacultyDTO [employeeId=%s, firstName=%s, middleName=%s, lastName=%s, email=%s, dob=%s, workExperience=%s, noOfPaperPublished=%s, hireDate=%s, contactNo=%s, gender=%s, salary=%s, facultyPapers=%s, subjects=%s]",
+				employeeId, firstName, middleName, lastName, email, dob, workExperience, noOfPaperPublished, hireDate,
+				contactNo, gender, salary, facultyPapers, subjects);
 	}
 
 }

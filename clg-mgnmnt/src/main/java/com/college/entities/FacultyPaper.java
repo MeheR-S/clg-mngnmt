@@ -8,9 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
 @Entity
 @Table(name = "FACULTY_PAPER")
 public class FacultyPaper {
@@ -18,16 +15,16 @@ public class FacultyPaper {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int PaperId;
-	
+
 	@Column(length = 50)
 	private String paperTopic;
-	
+
 	@Column(length = 1024)
 	private String paperDesc;
-	
-	//One faculty can publish more than one Paper.
-	@ManyToOne
-	@Cascade(CascadeType.ALL)
+
+	// One faculty can publish more than one Paper.
+//	@JsonIgnore
+	@ManyToOne // (fetch = FetchType.EAGER)
 	private Staff faculty;
 
 	public FacultyPaper() {
@@ -75,10 +72,8 @@ public class FacultyPaper {
 
 	@Override
 	public String toString() {
-		return String.format("FacultyPaper [PaperId=%s, paperTopic=%s, paperDesc=%s, faculty=%s]", PaperId, paperTopic, paperDesc,
-				faculty);
+		return String.format("FacultyPaper [PaperId=%s, paperTopic=%s, paperDesc=%s, faculty=%s]", PaperId, paperTopic,
+				paperDesc, faculty);
 	}
 
-	
-	
 }

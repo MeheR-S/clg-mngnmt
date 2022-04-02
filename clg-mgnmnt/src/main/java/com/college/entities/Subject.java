@@ -4,23 +4,32 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "SUBJECT")
 public class Subject {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int subjectId;
-	
+
 	private String subjectName;
-	
-	@ManyToMany(mappedBy = "subjects",cascade = CascadeType.ALL)
+
+	 @ManyToMany(fetch = FetchType.LAZY,
+		      cascade = {
+		          CascadeType.PERSIST,
+		          CascadeType.MERGE
+		      },
+		      mappedBy = "subjects")
+		  @JsonIgnore
 	private List<Staff> faculties;
 
 	public Subject() {
@@ -57,9 +66,17 @@ public class Subject {
 		this.faculties = faculties;
 	}
 
+	public void addFaculty(Staff faculty) {
+		faculties.add(faculty);
+	}
+
+	public void removeFaculty(Subject faculty) {
+		faculties.remove(faculty);
+	}
+
 	@Override
 	public String toString() {
 		return String.format("Subject [subjectId=%s, subjectName=%s, faculties=%s]", subjectId, subjectName, faculties);
 	}
-	
+
 }
