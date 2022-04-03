@@ -43,10 +43,11 @@ public class FacultyServices {
 		return staffMember;
 	}
 
-	public Staff findStaffMemberByEmailAndPassword(Credentials cred) {
-		Staff dbStaff = this.findStaffMemberByEmail(cred.getEmail());
+	public FacultyDTO findStaffMemberByEmailAndPassword(Credentials cred) {
+		Staff dbStaff = facultyRepository.findByEmail(cred.getEmail());
 		if (dbStaff != null && dbStaff.getPassword().equals(cred.getPassword())) {
-			return dbStaff;
+			FacultyDTO dbStaffDto = converter.toStaffDto(dbStaff);
+			return dbStaffDto;
 		}
 		return null;
 	}
@@ -78,11 +79,9 @@ public class FacultyServices {
 		List<Staff> allStaffMembers = facultyRepository.findAll();
 		return allStaffMembers;
 	}
-	
-	
 
-	//Assign DEPARTMENT to FACULTY
-	public Map<String, Object> assignDeptToFaculty(Department dept, int employeeId){
+	// Assign DEPARTMENT to FACULTY
+	public Map<String, Object> assignDeptToFaculty(Department dept, int employeeId) {
 		Staff faculty = facultyRepository.findById(employeeId).get();
 		if (faculty != null) {
 			faculty.setDepartment(dept);

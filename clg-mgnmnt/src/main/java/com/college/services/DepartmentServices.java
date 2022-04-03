@@ -6,12 +6,14 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.college.dtos.DepartmentDTO;
 import com.college.dtos.DtoEntityConverter;
 import com.college.entities.Department;
 import com.college.repository.DepartmentRepository;
 
+@Transactional
 @Service
 public class DepartmentServices {
 

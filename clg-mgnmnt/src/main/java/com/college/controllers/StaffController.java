@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.college.dtos.Credentials;
 import com.college.dtos.FacultyDTO;
 import com.college.dtos.UpdatePartialFacultyDTO;
 import com.college.entities.Staff;
@@ -24,6 +25,15 @@ public class StaffController {
 
 	@Autowired
 	private FacultyServices facultyServices;
+
+	// LOGIN
+	@GetMapping("/signIn")
+	public ResponseEntity<?> signIn(@RequestBody Credentials cred) {
+		FacultyDTO userDto = facultyServices.findStaffMemberByEmailAndPassword(cred);
+		if (userDto != null)
+			return Response.success(userDto);
+		return Response.error("PLEASE ENTER VALID CREDENTIALS");
+	}
 
 	// move this to admin controller
 	// Add new STAFF MEMBER
@@ -38,15 +48,14 @@ public class StaffController {
 		FacultyDTO facultyDetails = facultyServices.findStaffMemberById(employeId);
 		return Response.success(facultyDetails);
 	}
-	
-	
-	//GET ALL STAFF-MEMBERS
+
+	// GET ALL STAFF-MEMBERS
 	@GetMapping("/admin/allStaff")
 	private ResponseEntity<?> allStaffMembers() {
 		List<Staff> members = facultyServices.getAllStaffMembers();
 		List<FacultyDTO> dtoMembers = new ArrayList<>();
-		
-		for(int i = 0; i < members.size(); i++) {
+
+		for (int i = 0; i < members.size(); i++) {
 			FacultyDTO staff = facultyServices.findStaffMemberById(members.get(i).getEmployeeId());
 			dtoMembers.add(staff);
 		}

@@ -39,7 +39,7 @@ public class Department {
 	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Staff> faculty;
 
-	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Subject> subjects;
 
 	public Department() {
