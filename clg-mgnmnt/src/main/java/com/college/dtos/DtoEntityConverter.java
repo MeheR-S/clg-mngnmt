@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import com.college.entities.Department;
 import com.college.entities.FacultyPaper;
 import com.college.entities.Staff;
+import com.college.entities.Subject;
 
 @Component
 public class DtoEntityConverter {
@@ -88,6 +89,28 @@ public class DtoEntityConverter {
 
 		return paperDto;
 
+	}
+
+	public SubjectDTO toSubjectDto(Subject entity) {
+		SubjectDTO subjectDto = new SubjectDTO();
+
+		subjectDto.setSubjectId(entity.getSubjectId());
+		subjectDto.setSubjectName(entity.getSubjectName());
+		subjectDto.setDepartment(entity.getDepartment());
+
+		return subjectDto;
+
+	}
+
+	public Subject toSubjectEntity(SubjectDTO subjectDto) {
+
+		Subject entity = new Subject();
+		
+		entity.setSubjectId(subjectDto.getSubjectId());
+		entity.setSubjectName(subjectDto.getSubjectName());
+		entity.setDepartment(subjectDto.getDepartment());
+		
+		return entity;
 	}
 
 }

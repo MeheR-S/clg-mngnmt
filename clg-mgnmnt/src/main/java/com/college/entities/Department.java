@@ -39,14 +39,16 @@ public class Department {
 	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Staff> faculty;
 
+	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Subject> subjects;
+
 	public Department() {
 		super();
 	}
 
 	public Department(int departmentId, String departmentName, String hod, int firstYearStudents,
-			int secondYearStudents, int thirdYearStudents, int forthYearStudents, int noOfFaculty,
-			List<Staff> faculty) {
-		super();
+			int secondYearStudents, int thirdYearStudents, int forthYearStudents, int noOfFaculty, List<Staff> faculty,
+			List<Subject> subjects) {
 		this.departmentId = departmentId;
 		this.departmentName = departmentName;
 		this.hod = hod;
@@ -56,6 +58,7 @@ public class Department {
 		this.forthYearStudents = forthYearStudents;
 		this.noOfFaculty = noOfFaculty;
 		this.faculty = faculty;
+		this.subjects = subjects;
 	}
 
 	public int getDepartmentId() {
@@ -130,12 +133,20 @@ public class Department {
 		this.faculty = faculty;
 	}
 
+	public List<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(List<Subject> subjects) {
+		this.subjects = subjects;
+	}
+
 	@Override
 	public String toString() {
 		return String.format(
-				"Department [departmentId=%s, departmentName=%s, hod=%s, firstYearStudents=%s, secondYearStudents=%s, thirdYearStudents=%s, forthYearStudents=%s, noOfFaculty=%s, faculty=%s]",
+				"Department [departmentId=%s, departmentName=%s, hod=%s, firstYearStudents=%s, secondYearStudents=%s, thirdYearStudents=%s, forthYearStudents=%s, noOfFaculty=%s, faculty=%s, subjects=%s]",
 				departmentId, departmentName, hod, firstYearStudents, secondYearStudents, thirdYearStudents,
-				forthYearStudents, noOfFaculty, faculty);
+				forthYearStudents, noOfFaculty, faculty, subjects);
 	}
 
 }
