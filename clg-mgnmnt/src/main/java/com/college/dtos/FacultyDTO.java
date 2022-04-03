@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.college.entities.FacultyPaper;
-import com.college.entities.Subject;
+//import com.college.entities.Subject;
 
 public class FacultyDTO {
 
@@ -22,7 +22,7 @@ public class FacultyDTO {
 	private String gender;
 	private double salary;
 	private List<FacultyPaper> facultyPapers;
-	private List<Subject> subjects;
+	// private List<Subject> subjects;
 
 	public FacultyDTO() {
 		super();
@@ -30,7 +30,8 @@ public class FacultyDTO {
 
 	public FacultyDTO(int employeeId, String firstName, String middleName, String lastName, String email,
 			String password, Date dob, double workExperience, int noOfPaperPublished, Date hireDate, String contactNo,
-			String gender, double salary, List<FacultyPaper> facultyPapers, List<Subject> subjects) {
+			String gender, double salary, List<FacultyPaper> facultyPapers// ,List<Subject> subjects
+	) {
 		this.employeeId = employeeId;
 		this.firstName = firstName;
 		this.middleName = middleName;
@@ -45,7 +46,7 @@ public class FacultyDTO {
 		this.gender = gender;
 		this.salary = salary;
 		this.facultyPapers = facultyPapers;
-		this.subjects = subjects;
+		// this.subjects = subjects;
 	}
 
 	public int getEmployeeId() {
@@ -160,20 +161,21 @@ public class FacultyDTO {
 		this.facultyPapers = facultyPapers;
 	}
 
-	public List<Subject> getSubjects() {
-		return subjects;
-	}
-
-	public void setSubjects(List<Subject> subjects) {
-		this.subjects = subjects;
-	}
+//	public List<Subject> getSubjects() {
+//		return subjects;
+//	}
+//
+//	public void setSubjects(List<Subject> subjects) {
+//		this.subjects = subjects;
+//	}
 
 	@Override
 	public String toString() {
 		return String.format(
-				"FacultyDTO [employeeId=%s, firstName=%s, middleName=%s, lastName=%s, email=%s, dob=%s, workExperience=%s, noOfPaperPublished=%s, hireDate=%s, contactNo=%s, gender=%s, salary=%s, facultyPapers=%s, subjects=%s]",
+				"FacultyDTO [employeeId=%s, firstName=%s, middleName=%s, lastName=%s, email=%s, dob=%s, workExperience=%s, noOfPaperPublished=%s, hireDate=%s, contactNo=%s, gender=%s, salary=%s, facultyPapers=%s]",
 				employeeId, firstName, middleName, lastName, email, dob, workExperience, noOfPaperPublished, hireDate,
-				contactNo, gender, salary, facultyPapers, subjects);
+				contactNo, gender, salary, facultyPapers// , subjects
+		);
 	}
 
 }

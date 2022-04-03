@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "FACULTY_PAPER")
 public class FacultyPaper {
@@ -23,7 +25,7 @@ public class FacultyPaper {
 	private String paperDesc;
 
 	// One faculty can publish more than one Paper.
-//	@JsonIgnore
+	@JsonIgnore
 	@ManyToOne // (fetch = FetchType.EAGER)
 	private Staff faculty;
 

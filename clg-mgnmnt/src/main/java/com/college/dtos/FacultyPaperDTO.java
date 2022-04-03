@@ -14,7 +14,6 @@ public class FacultyPaperDTO {
 	}
 
 	public FacultyPaperDTO(int paperId, String paperTopic, String paperDesc, Staff faculty) {
-		super();
 		PaperId = paperId;
 		this.paperTopic = paperTopic;
 		this.paperDesc = paperDesc;

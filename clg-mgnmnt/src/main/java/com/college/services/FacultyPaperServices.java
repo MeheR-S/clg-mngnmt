@@ -1,5 +1,6 @@
 package com.college.services;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,9 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.college.dtos.DtoEntityConverter;
+import com.college.dtos.FacultyDTO;
+import com.college.dtos.FacultyPaperDTO;
 import com.college.entities.FacultyPaper;
 import com.college.entities.Staff;
 import com.college.repository.FacultyPaperRepository;
@@ -20,6 +24,9 @@ public class FacultyPaperServices {
 
 	@Autowired
 	private FacultyRepository facultyRepository;
+
+	@Autowired
+	private DtoEntityConverter converter;
 
 	public FacultyPaper addOrUpdate(FacultyPaper newPaper) {
 		return facultyPaperRepository.save(newPaper);
@@ -44,6 +51,31 @@ public class FacultyPaperServices {
 		}
 
 		return Collections.singletonMap("affectedRows", 0);
+	}
+
+	public Map<String, Object> addPaper(FacultyPaper facultyPaper, int id) {
+		Staff faculty = facultyRepository.findById(id).get();
+		if (faculty != null) {
+			FacultyPaper newPaper = new FacultyPaper();
+			newPaper.setPaperTopic(facultyPaper.getPaperTopic());
+			newPaper.setPaperDesc(facultyPaper.getPaperDesc());
+			newPaper.setFaculty(faculty);
+			facultyPaperRepository.save(newPaper);
+			return Collections.singletonMap("Records Affected", 1);
+		}
+		return Collections.singletonMap("affectedRows", 0);
+	}
+
+	public List<FacultyPaperDTO> allPublishedPapers(FacultyDTO facultyDto) {
+		List<FacultyPaper> publishedPaper = facultyDto.getFacultyPapers();
+		List<FacultyPaperDTO> publishedPaperDto = new ArrayList<>();
+
+		for (int i = 0; i < publishedPaper.size(); i++) {
+			FacultyPaperDTO dtoPapers = converter.toFacultyPaperDto(publishedPaper.get(i));
+			publishedPaperDto.add(dtoPapers);
+		}
+
+		return publishedPaperDto;
 	}
 
 }

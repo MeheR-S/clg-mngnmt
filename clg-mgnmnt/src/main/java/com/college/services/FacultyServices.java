@@ -1,6 +1,7 @@
 package com.college.services;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.college.dtos.Credentials;
 import com.college.dtos.DtoEntityConverter;
+import com.college.dtos.FacultyDTO;
 import com.college.dtos.UpdatePartialFacultyDTO;
+import com.college.entities.Department;
 import com.college.entities.Staff;
 import com.college.repository.FacultyRepository;
 
@@ -28,9 +31,11 @@ public class FacultyServices {
 		return facultyRepository.save(newStaffMember);
 	}
 
-	public Staff findStaffMemberById(int employeeId) {
+	public FacultyDTO findStaffMemberById(int employeeId) {
 		Staff staffMember = facultyRepository.findById(employeeId).get();
-		return staffMember;
+		FacultyDTO facultyMember = converter.toStaffDto(staffMember);
+
+		return facultyMember;
 	}
 
 	public Staff findStaffMemberByEmail(String email) {
@@ -68,5 +73,23 @@ public class FacultyServices {
 
 	}
 
+	// get all the faculty members
+	public List<Staff> getAllStaffMembers() {
+		List<Staff> allStaffMembers = facultyRepository.findAll();
+		return allStaffMembers;
+	}
+	
+	
+
+	//Assign DEPARTMENT to FACULTY
+	public Map<String, Object> assignDeptToFaculty(Department dept, int employeeId){
+		Staff faculty = facultyRepository.findById(employeeId).get();
+		if (faculty != null) {
+			faculty.setDepartment(dept);
+			facultyRepository.save(faculty);
+			return Collections.singletonMap("Records Affected", 1);
+		}
+		return Collections.singletonMap("affectedRows", 0);
+	}
 
 }
