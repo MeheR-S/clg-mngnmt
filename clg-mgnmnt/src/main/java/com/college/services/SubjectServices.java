@@ -37,4 +37,7 @@ public class SubjectServices {
 		}
 		return Collections.singletonMap("Subject with subjectId " + subjectId + " NOT FOUND & Records affected", 0);
 	}
+	
+	//SUBJECT AND FACULTY OPERATIONS
+	//ASSIGN A SUBJECT TO FACULTY
 }

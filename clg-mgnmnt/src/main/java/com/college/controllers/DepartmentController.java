@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.college.dtos.DepartmentDTO;
+import com.college.dtos.DisplayDepartmentDTO;
 import com.college.entities.Department;
 import com.college.services.DepartmentServices;
 import com.college.services.FacultyServices;
@@ -41,14 +42,33 @@ public class DepartmentController {
 		return Response.success(assigned);
 	}
 
-	// GET ALL DEPARTMENTS
+	//****************************************************************************************************
+	// GET ALL DEPARTMENTS WITH WHOLE INFORMATION
+	/*
 	@GetMapping("/departments/all")
 	public ResponseEntity<?> departments() {
 		List<Department> departments = departmentServices.allDepartments();
 		List<DepartmentDTO> dtoDepartments = new ArrayList<>();
 
 		for (int i = 0; i < departments.size(); i++) {
-			DepartmentDTO dtoDept = departmentServices.getdepartmentById(departments.get(i).getDepartmentId());
+			DepartmentDTO dtoDept = departmentServices.getDepartmentById(departments.get(i).getDepartmentId());
+			dtoDepartments.add(dtoDept);
+		}
+		return Response.success(dtoDepartments);
+	}
+	*/
+	//****************************************************************************************************
+	
+	
+	// GET ALL DEPARTMENTS
+	@GetMapping("/departments/all")
+	public ResponseEntity<?> departments() {
+		List<Department> departments = departmentServices.allDepartments();
+		List<DisplayDepartmentDTO> dtoDepartments = new ArrayList<>();
+
+		for (int i = 0; i < departments.size(); i++) {
+			DisplayDepartmentDTO dtoDept = departmentServices
+					.getDepartmentByIdToDisplay(departments.get(i).getDepartmentId());
 			dtoDepartments.add(dtoDept);
 		}
 		return Response.success(dtoDepartments);
@@ -64,7 +84,7 @@ public class DepartmentController {
 	// GET A DEPARTMENT
 	@GetMapping("/department/{id}")
 	public ResponseEntity<?> getDepartment(@PathVariable("id") int departmentId) {
-		DepartmentDTO department = departmentServices.getdepartmentById(departmentId);
+		DepartmentDTO department = departmentServices.getDepartmentById(departmentId);
 		return Response.success(department);
 	}
 }

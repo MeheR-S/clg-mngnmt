@@ -55,7 +55,7 @@ public class FacultyPaperController {
 	}
 
 	// modify logic only the faculty who added the paper should be able to delete it
-	@DeleteMapping("/faculty/{id}")
+	@DeleteMapping("/faculty/deletePblishedPaper/{id}")
 	public ResponseEntity<?> deletePaper(@PathVariable("id") int paperId) {
 		Map<String, Object> result = facultyPaperServices.deletePaper(paperId);
 		return Response.success(result);

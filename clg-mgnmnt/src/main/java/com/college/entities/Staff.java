@@ -67,7 +67,7 @@ public class Staff {
 //			@JoinColumn(name = "subject_id") })
 //	private List<Subject> subjects;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne // (cascade = CascadeType.ALL)
 	private Department department;
 
 	// CONTRUCTORS
@@ -93,7 +93,6 @@ public class Staff {
 		this.gender = gender;
 		this.salary = salary;
 		this.facultyPapers = facultyPapers;
-//		this.subjects = subjects;
 		this.department = department;
 	}
 
@@ -208,14 +207,6 @@ public class Staff {
 	public void setFacultyPapers(List<FacultyPaper> facultyPapers) {
 		this.facultyPapers = facultyPapers;
 	}
-
-//	public List<Subject> getSubjects() {
-//		return subjects;
-//	}
-//
-//	public void setSubjects(List<Subject> subjects) {
-//		this.subjects = subjects;
-//	}
 
 	public Department getDepartment() {
 		return department;

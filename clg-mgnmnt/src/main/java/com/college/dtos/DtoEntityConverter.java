@@ -105,12 +105,21 @@ public class DtoEntityConverter {
 	public Subject toSubjectEntity(SubjectDTO subjectDto) {
 
 		Subject entity = new Subject();
-		
+
 		entity.setSubjectId(subjectDto.getSubjectId());
 		entity.setSubjectName(subjectDto.getSubjectName());
 		entity.setDepartment(subjectDto.getDepartment());
-		
+
 		return entity;
+	}
+
+	public DisplayDepartmentDTO toDepartmentDisplayDto(Department entity) {
+		DisplayDepartmentDTO displayDepartmentDto = new DisplayDepartmentDTO();
+		displayDepartmentDto.setDepartmentId(entity.getDepartmentId());
+		displayDepartmentDto.setDepartmentName(entity.getDepartmentName());
+		displayDepartmentDto.setHod(entity.getHod());
+
+		return displayDepartmentDto;
 	}
 
 }

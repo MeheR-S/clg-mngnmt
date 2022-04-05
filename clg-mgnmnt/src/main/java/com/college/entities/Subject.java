@@ -1,6 +1,5 @@
 package com.college.entities;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +19,7 @@ public class Subject {
 	@Column(length = 30)
 	private String subjectName;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne//(cascade = CascadeType.ALL)
 	private Department department;
 
 	public Subject() {

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.college.dtos.DepartmentDTO;
+import com.college.dtos.DisplayDepartmentDTO;
 import com.college.dtos.DtoEntityConverter;
 import com.college.entities.Department;
 import com.college.repository.DepartmentRepository;
@@ -46,9 +47,17 @@ public class DepartmentServices {
 	}
 
 	// GET DEPARTMENT BY ITS ID
-	public DepartmentDTO getdepartmentById(int departmentId) {
+	public DepartmentDTO getDepartmentById(int departmentId) {
 		Department dept = departmentRepository.findById(departmentId).get();
 		DepartmentDTO dtoDept = converter.toDepartmentDto(dept);
+		return dtoDept;
+	}
+	
+	
+	//GET DEPARETMENT IN PROPER FORM
+	public DisplayDepartmentDTO getDepartmentByIdToDisplay(int departmentId) {
+		Department dept = departmentRepository.findById(departmentId).get();
+		DisplayDepartmentDTO dtoDept = converter.toDepartmentDisplayDto(dept);
 		return dtoDept;
 	}
 }
