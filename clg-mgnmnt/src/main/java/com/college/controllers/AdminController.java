@@ -13,4 +13,5 @@ public class AdminController {
 //	public Subject assignSubject(@PathVariable("subjectId") int subjectId, @PathVariable("employeeId") int employeeId) {
 //		return subjectServices.assignFacultyToSubject(subjectId, employeeId);
 //	}
+
 }

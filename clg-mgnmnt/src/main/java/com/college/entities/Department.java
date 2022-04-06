@@ -36,7 +36,7 @@ public class Department {
 	private int noOfFaculty;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Staff> faculty;
 
 	@OneToMany(mappedBy = "department", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

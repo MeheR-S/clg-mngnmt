@@ -51,8 +51,7 @@ public class FacultyPaperServices {
 			facultyPaperRepository.deleteById(paperId);
 			return Collections.singletonMap("Affected records :", 1);
 		}
-
-		return Collections.singletonMap("affectedRows", 0);
+		return Collections.singletonMap("Records deleted", 0);
 	}
 
 	public Map<String, Object> addPaper(FacultyPaper facultyPaper, int id) {
@@ -79,5 +78,4 @@ public class FacultyPaperServices {
 
 		return publishedPaperDto;
 	}
-
 }

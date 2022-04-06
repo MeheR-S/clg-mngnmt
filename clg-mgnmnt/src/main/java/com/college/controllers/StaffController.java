@@ -76,4 +76,10 @@ public class StaffController {
 		return Response.success(result);
 	}
 
+	@GetMapping("/admin/listOf/{designation}")
+	public ResponseEntity<?> getStaffOfParticular(@PathVariable("designation") String designation) {
+		Map<String, Object> result = facultyServices.getStaffByDesignation(designation);
+		return Response.success(result);
+	}
+
 }

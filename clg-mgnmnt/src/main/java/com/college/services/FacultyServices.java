@@ -91,4 +91,17 @@ public class FacultyServices {
 		return Collections.singletonMap("affectedRows", 0);
 	}
 
+	// GET STAFF MEMBER DETAILS BY DESIGNATION
+	public Map<String, Object> getStaffByDesignation(String designation) {
+		List<Staff> members = facultyRepository.findByDesignation(designation);
+		return Collections.singletonMap("STAFF MEMBERS", members);
+	}
+	
+	
+	// GET DESIGNATIONS
+		public Map<String, Object> getDesignations() {
+			List<String> designations = facultyRepository.getAllDesignations();
+			return Collections.singletonMap("DESIGNATIONS", designations);
+		}
+
 }

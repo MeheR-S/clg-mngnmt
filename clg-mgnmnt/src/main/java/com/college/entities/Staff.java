@@ -42,6 +42,8 @@ public class Staff {
 	@Temporal(TemporalType.DATE)
 	private Date dob;
 
+	private String designation;
+
 	private double workExperience;
 
 	private int noOfPaperPublished;
@@ -56,19 +58,14 @@ public class Staff {
 	private double salary;
 
 	// One faculty can publish more than one Paper.
-	@OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<FacultyPaper> facultyPapers;
 
-	// One FACULTY can Teach more than one SUBJECT and similarly one SUBJECT can be
-	// taught by more than one FACULTY
-	// i.e. MANY TO MANY relation
-//	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-//	@JoinTable(name = "tutorial_tags", joinColumns = { @JoinColumn(name = "faculty_id") }, inverseJoinColumns = {
-//			@JoinColumn(name = "subject_id") })
-//	private List<Subject> subjects;
-
-	@ManyToOne // (cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL)
 	private Department department;
+
+	@OneToMany(mappedBy = "faculty", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Subject> subjects;
 
 	// CONTRUCTORS
 
@@ -77,8 +74,9 @@ public class Staff {
 	}
 
 	public Staff(int employeeId, String firstName, String middleName, String lastName, String email, String password,
-			Date dob, double workExperience, int noOfPaperPublished, Date hireDate, String contactNo, String gender,
-			double salary, List<FacultyPaper> facultyPapers, Department department) {
+			Date dob, String designation, double workExperience, int noOfPaperPublished, Date hireDate,
+			String contactNo, String gender, double salary, List<FacultyPaper> facultyPapers, Department department,
+			List<Subject> subjects) {
 		this.employeeId = employeeId;
 		this.firstName = firstName;
 		this.middleName = middleName;
@@ -86,6 +84,7 @@ public class Staff {
 		this.email = email;
 		this.password = password;
 		this.dob = dob;
+		this.designation = designation;
 		this.workExperience = workExperience;
 		this.noOfPaperPublished = noOfPaperPublished;
 		this.hireDate = hireDate;
@@ -94,6 +93,7 @@ public class Staff {
 		this.salary = salary;
 		this.facultyPapers = facultyPapers;
 		this.department = department;
+		this.subjects = subjects;
 	}
 
 	public int getEmployeeId() {
@@ -216,12 +216,28 @@ public class Staff {
 		this.department = department;
 	}
 
+	public List<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(List<Subject> subjects) {
+		this.subjects = subjects;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+
 	@Override
 	public String toString() {
 		return String.format(
-				"Staff [employeeId=%s, firstName=%s, middleName=%s, lastName=%s, email=%s, dob=%s, workExperience=%s, noOfPaperPublished=%s, hireDate=%s, contactNo=%s, gender=%s, salary=%s, facultyPapers=%s, department=%s]",
-				employeeId, firstName, middleName, lastName, email, dob, workExperience, noOfPaperPublished, hireDate,
-				contactNo, gender, salary, facultyPapers, department);
+				"Staff [employeeId=%s, firstName=%s, middleName=%s, lastName=%s, email=%s, dob=%s, designation=%s, workExperience=%s, noOfPaperPublished=%s, hireDate=%s, contactNo=%s, gender=%s, salary=%s, facultyPapers=%s, department=%s, subjects=%s]",
+				employeeId, firstName, middleName, lastName, email, dob, designation, workExperience,
+				noOfPaperPublished, hireDate, contactNo, gender, salary, facultyPapers, department, subjects);
 	}
 
 }

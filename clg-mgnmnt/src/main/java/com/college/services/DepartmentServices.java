@@ -40,8 +40,9 @@ public class DepartmentServices {
 	public Map<String, Object> deleteDepartment(int departmentId) {
 		if (departmentRepository.existsById(departmentId)) {
 			Department dept = departmentRepository.findById(departmentId).get();
+			DisplayDepartmentDTO displayDept = converter.toDepartmentDisplayDto(dept);
 			departmentRepository.deleteById(departmentId);
-			return Collections.singletonMap("Affected records :", dept);
+			return Collections.singletonMap("Affected records :", displayDept);
 		}
 		return Collections.singletonMap("affectedRows", 0);
 	}
@@ -52,9 +53,8 @@ public class DepartmentServices {
 		DepartmentDTO dtoDept = converter.toDepartmentDto(dept);
 		return dtoDept;
 	}
-	
-	
-	//GET DEPARETMENT IN PROPER FORM
+
+	// GET DEPARETMENT IN PROPER FORM
 	public DisplayDepartmentDTO getDepartmentByIdToDisplay(int departmentId) {
 		Department dept = departmentRepository.findById(departmentId).get();
 		DisplayDepartmentDTO dtoDept = converter.toDepartmentDisplayDto(dept);
