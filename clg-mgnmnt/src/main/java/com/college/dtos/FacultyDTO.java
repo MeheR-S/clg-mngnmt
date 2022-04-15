@@ -3,7 +3,9 @@ package com.college.dtos;
 import java.util.Date;
 import java.util.List;
 
+import com.college.entities.Department;
 import com.college.entities.FacultyPaper;
+import com.college.entities.Subject;
 //import com.college.entities.Subject;
 
 public class FacultyDTO {
@@ -22,7 +24,9 @@ public class FacultyDTO {
 	private String gender;
 	private double salary;
 	private List<FacultyPaper> facultyPapers;
-	// private List<Subject> subjects;
+	private Department department;
+	private String designation;
+	private List<Subject> subjects;
 
 	public FacultyDTO() {
 		super();
@@ -30,8 +34,8 @@ public class FacultyDTO {
 
 	public FacultyDTO(int employeeId, String firstName, String middleName, String lastName, String email,
 			String password, Date dob, double workExperience, int noOfPaperPublished, Date hireDate, String contactNo,
-			String gender, double salary, List<FacultyPaper> facultyPapers// ,List<Subject> subjects
-	) {
+			String gender, double salary, List<FacultyPaper> facultyPapers, Department department, String designation,
+			List<Subject> subjects) {
 		this.employeeId = employeeId;
 		this.firstName = firstName;
 		this.middleName = middleName;
@@ -46,7 +50,9 @@ public class FacultyDTO {
 		this.gender = gender;
 		this.salary = salary;
 		this.facultyPapers = facultyPapers;
-		// this.subjects = subjects;
+		this.department = department;
+		this.designation = designation;
+		this.subjects = subjects;
 	}
 
 	public int getEmployeeId() {
@@ -161,21 +167,36 @@ public class FacultyDTO {
 		this.facultyPapers = facultyPapers;
 	}
 
-//	public List<Subject> getSubjects() {
-//		return subjects;
-//	}
-//
-//	public void setSubjects(List<Subject> subjects) {
-//		this.subjects = subjects;
-//	}
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+	public String getDesignation() {
+		return designation;
+	}
+
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+
+	public List<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(List<Subject> subjects) {
+		this.subjects = subjects;
+	}
 
 	@Override
 	public String toString() {
 		return String.format(
-				"FacultyDTO [employeeId=%s, firstName=%s, middleName=%s, lastName=%s, email=%s, dob=%s, workExperience=%s, noOfPaperPublished=%s, hireDate=%s, contactNo=%s, gender=%s, salary=%s, facultyPapers=%s]",
-				employeeId, firstName, middleName, lastName, email, dob, workExperience, noOfPaperPublished, hireDate,
-				contactNo, gender, salary, facultyPapers// , subjects
-		);
+				"FacultyDTO [employeeId=%s, firstName=%s, middleName=%s, lastName=%s, email=%s, password=%s, dob=%s, workExperience=%s, noOfPaperPublished=%s, hireDate=%s, contactNo=%s, gender=%s, salary=%s, facultyPapers=%s, department=%s, designation=%s, subjects=%s]",
+				employeeId, firstName, middleName, lastName, email, password, dob, workExperience, noOfPaperPublished,
+				hireDate, contactNo, gender, salary, facultyPapers, department, designation, subjects);
 	}
 
 }

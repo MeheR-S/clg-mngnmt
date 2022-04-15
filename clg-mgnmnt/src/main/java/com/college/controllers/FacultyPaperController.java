@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,7 @@ import com.college.dtos.FacultyPaperDTO;
 import com.college.entities.FacultyPaper;
 import com.college.services.FacultyPaperServices;
 import com.college.services.FacultyServices;
-
+@CrossOrigin(origins = "*")
 @RestController
 public class FacultyPaperController {
 
@@ -34,8 +35,9 @@ public class FacultyPaperController {
 //	}
 
 	@PostMapping("/faculty/{id}/addPaper")
-	private Map<String, Object> addPaperdetails(@RequestBody FacultyPaper facultyPaper, @PathVariable("id") int id) {
-		return facultyPaperServices.addPaper(facultyPaper, id);
+	private ResponseEntity<?> addPaperdetails(@RequestBody FacultyPaper facultyPaper, @PathVariable("id") int id) {
+		 facultyPaperServices.addPaper(facultyPaper, id);
+		 return Response.success(facultyPaper);
 	}
 
 	// get paper published by particular faculty

@@ -1,18 +1,24 @@
 package com.college.dtos;
 
+import java.util.List;
+
+import com.college.entities.Subject;
+
 public class DisplayDepartmentDTO {
 
 	private int departmentId;
 	private String departmentName;
 	private String hod;
+	private List<Subject> subjects;
 
 	public DisplayDepartmentDTO() {
 	}
 
-	public DisplayDepartmentDTO(int departmentId, String departmentName, String hod) {
+	public DisplayDepartmentDTO(int departmentId, String departmentName, String hod, List<Subject> subjects) {
 		this.departmentId = departmentId;
 		this.departmentName = departmentName;
 		this.hod = hod;
+		this.subjects = subjects;
 	}
 
 	public int getDepartmentId() {
@@ -39,10 +45,18 @@ public class DisplayDepartmentDTO {
 		this.hod = hod;
 	}
 
+	public List<Subject> getSubjects() {
+		return subjects;
+	}
+
+	public void setSubjects(List<Subject> subjects) {
+		this.subjects = subjects;
+	}
+
 	@Override
 	public String toString() {
-		return String.format("DisplayDepartmentDTO [departmentId=%s, departmentName=%s, hod=%s]", departmentId,
-				departmentName, hod);
+		return String.format("DisplayDepartmentDTO [departmentId=%s, departmentName=%s, hod=%s, subjects=%s]",
+				departmentId, departmentName, hod, subjects);
 	}
 
 }

@@ -10,10 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.college.dtos.Credentials;
 import com.college.dtos.DtoEntityConverter;
+import com.college.dtos.EmployeeDTO;
 import com.college.dtos.FacultyDTO;
+import com.college.dtos.StaffDto;
 import com.college.dtos.UpdatePartialFacultyDTO;
+import com.college.dtos.UserDTO;
 import com.college.entities.Department;
 import com.college.entities.Staff;
+import com.college.repository.DepartmentRepository;
 import com.college.repository.FacultyRepository;
 
 @Transactional
@@ -25,10 +29,22 @@ public class FacultyServices {
 	private FacultyRepository facultyRepository;
 
 	@Autowired
+	private DepartmentRepository departmentRepository;
+
+	@Autowired
 	private DtoEntityConverter converter;
 
 	public Staff addOrUpdate(Staff newStaffMember) {
 		return facultyRepository.save(newStaffMember);
+	}
+
+	public StaffDto addNewEmployee(StaffDto newEmployee) {
+		Staff newEntry = converter.toStaffEntity(newEmployee);
+		newEntry.setDepartment(departmentRepository.getById(newEmployee.getDepartmentId()));
+		facultyRepository.save(newEntry);
+		StaffDto newDtoEntry = converter.toEmployeeDto(newEntry);
+		return newDtoEntry;
+
 	}
 
 	public FacultyDTO findStaffMemberById(int employeeId) {
@@ -43,10 +59,10 @@ public class FacultyServices {
 		return staffMember;
 	}
 
-	public FacultyDTO findStaffMemberByEmailAndPassword(Credentials cred) {
+	public UserDTO findStaffMemberByEmailAndPassword(Credentials cred) {
 		Staff dbStaff = facultyRepository.findByEmail(cred.getEmail());
 		if (dbStaff != null && dbStaff.getPassword().equals(cred.getPassword())) {
-			FacultyDTO dbStaffDto = converter.toStaffDto(dbStaff);
+			UserDTO dbStaffDto = converter.toUserDto(dbStaff);
 			return dbStaffDto;
 		}
 		return null;
@@ -96,12 +112,28 @@ public class FacultyServices {
 		List<Staff> members = facultyRepository.findByDesignation(designation);
 		return Collections.singletonMap("STAFF MEMBERS", members);
 	}
-	
-	
-	// GET DESIGNATIONS
-		public Map<String, Object> getDesignations() {
-			List<String> designations = facultyRepository.getAllDesignations();
-			return Collections.singletonMap("DESIGNATIONS", designations);
+
+	public List<Staff> getByDesignations(String designation) {
+		List<Staff> members = facultyRepository.findByDesignation(designation);
+		return members;
+	}
+
+	public Map<String, Object> updateFacultyInfo(int employeeId, EmployeeDTO employeeDto) {
+		if (facultyRepository.existsById(employeeId)) {
+			employeeDto.setEmployeeId(employeeId);
+			Staff staffMember = converter.toEmployeeEntity(employeeDto);
+			staffMember = facultyRepository.save(staffMember);
+			return Collections.singletonMap("Rows Affected", 1);
 		}
+		return Collections.singletonMap("Rows Affected", 0);
+	}
+
+	
+
+	// GET DESIGNATIONS
+//		public Map<String, Object> getDesignations() {
+//			List<String> designations = facultyRepository.getAllDesignations();
+//			return Collections.singletonMap("DESIGNATIONS", designations);
+//		}
 
 }

@@ -60,6 +60,9 @@ public class DtoEntityConverter {
 		staffDto.setNoOfPaperPublished(entity.getNoOfPaperPublished());
 		staffDto.setSalary(entity.getSalary());
 		staffDto.setWorkExperience(entity.getWorkExperience());
+		staffDto.setDepartment(entity.getDepartment());
+		staffDto.setDesignation(entity.getDesignation());
+		staffDto.setSubjects(entity.getSubjects());
 		return staffDto;
 	}
 
@@ -118,8 +121,98 @@ public class DtoEntityConverter {
 		displayDepartmentDto.setDepartmentId(entity.getDepartmentId());
 		displayDepartmentDto.setDepartmentName(entity.getDepartmentName());
 		displayDepartmentDto.setHod(entity.getHod());
+		displayDepartmentDto.setSubjects(entity.getSubjects());
 
 		return displayDepartmentDto;
+	}
+
+	public StaffDto toEmployeeDto(Staff employee) {
+		StaffDto staffDto = new StaffDto();
+		staffDto.setFirstName(employee.getFirstName());
+		staffDto.setMiddleName(employee.getMiddleName());
+		staffDto.setLastName(employee.getLastName());
+		staffDto.setDepartmentId(employee.getDepartment().getDepartmentId());
+		staffDto.setContactNo(employee.getContactNo());
+		staffDto.setDob(employee.getDob());
+		staffDto.setHireDate(employee.getHireDate());
+		staffDto.setEmail(employee.getEmail());
+		staffDto.setPassword(employee.getPassword());
+		staffDto.setFacultyPapers(employee.getFacultyPapers());
+		staffDto.setEmployeeId(employee.getEmployeeId());
+		staffDto.setNoOfPaperPublished(employee.getNoOfPaperPublished());
+		staffDto.setSalary(employee.getSalary());
+		staffDto.setWorkExperience(employee.getWorkExperience());
+		staffDto.setGender(employee.getGender());
+		staffDto.setDesignation(employee.getDesignation());
+
+		return staffDto;
+	}
+
+	public Staff toStaffEntity(StaffDto newEmployee) {
+		Staff newEntry = new Staff();
+		newEntry.setFirstName(newEmployee.getFirstName());
+		newEntry.setMiddleName(newEmployee.getMiddleName());
+		newEntry.setLastName(newEmployee.getLastName());
+		newEntry.setContactNo(newEmployee.getContactNo());
+		newEntry.setDob(newEmployee.getDob());
+		newEntry.setHireDate(newEmployee.getHireDate());
+		newEntry.setEmail(newEmployee.getEmail());
+		newEntry.setPassword(newEmployee.getPassword());
+		newEntry.setFacultyPapers(newEmployee.getFacultyPapers());
+		newEntry.setEmployeeId(newEmployee.getEmployeeId());
+		newEntry.setNoOfPaperPublished(newEmployee.getNoOfPaperPublished());
+		newEntry.setSalary(newEmployee.getSalary());
+		newEntry.setWorkExperience(newEmployee.getWorkExperience());
+		newEntry.setGender(newEmployee.getGender());
+		newEntry.setDesignation(newEmployee.getDesignation());
+		return newEntry;
+	}
+	
+	
+
+	public UserDTO toUserDto(Staff dbStaff) {
+		UserDTO userDto = new UserDTO();
+		userDto.setEmail(dbStaff.getEmail());
+		userDto.setPassword(dbStaff.getPassword());
+		userDto.setEmployeeId(dbStaff.getEmployeeId());
+		userDto.setDesignation(dbStaff.getDesignation());
+		userDto.setFirstName(dbStaff.getFirstName());
+		userDto.setMiddleName(dbStaff.getMiddleName());
+		userDto.setLastName(dbStaff.getLastName());
+		return userDto;
+	}
+
+	public Staff toEmployeeEntity(EmployeeDTO newEmployee) {
+		Staff newEntry = new Staff();
+		newEntry.setFirstName(newEmployee.getFirstName());
+		newEntry.setMiddleName(newEmployee.getMiddleName());
+		newEntry.setLastName(newEmployee.getLastName());
+		newEntry.setContactNo(newEmployee.getContactNo());
+		newEntry.setDob(newEmployee.getDob());
+		newEntry.setHireDate(newEmployee.getHireDate());
+		newEntry.setEmail(newEmployee.getEmail());
+		newEntry.setPassword(newEmployee.getPassword());
+		newEntry.setEmployeeId(newEmployee.getEmployeeId());
+		newEntry.setNoOfPaperPublished(newEmployee.getNoOfPaperPublished());
+		newEntry.setSalary(newEmployee.getSalary());
+		newEntry.setWorkExperience(newEmployee.getWorkExperience());
+		newEntry.setGender(newEmployee.getGender());
+		newEntry.setDesignation(newEmployee.getDesignation());
+		newEntry.setDepartment(newEmployee.getDepartment());
+		return newEntry;
+	}
+
+	public Department toDepartmentEntity(DeptDTO department) {
+		Department dept = new Department();
+		dept.setDepartmentId(department.getDepartmentId());
+		dept.setDepartmentName(department.getDepartmentName());
+		dept.setHod(department.getHod());
+		dept.setFirstYearStudents(department.getFirstYearStudents());
+		dept.setSecondYearStudents(department.getSecondYearStudents());
+		dept.setThirdYearStudents(department.getThirdYearStudents());
+		dept.setForthYearStudents(department.getForthYearStudents());
+		dept.setNoOfFaculty(department.getNoOfFaculty());
+		return dept;
 	}
 
 }

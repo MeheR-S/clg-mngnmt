@@ -1,20 +1,25 @@
 package com.college.controllers;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.college.dtos.SubjectDTO;
+import com.college.dtos.SubjectFacultyDTO;
 import com.college.entities.Subject;
 import com.college.services.SubjectServices;
 
+@CrossOrigin(origins = "*")
 @Controller
 public class SubjectController {
 
@@ -23,7 +28,7 @@ public class SubjectController {
 
 	@PostMapping("/admin/add/subject")
 	public ResponseEntity<?> addSubject(@RequestBody SubjectDTO subjectDto) {
-		Map<String, Object> result = subjectServices.addSubject(subjectDto);
+		Subject result = subjectServices.addSubject(subjectDto);
 		return Response.success(result);
 	}
 
@@ -40,17 +45,31 @@ public class SubjectController {
 	}
 
 	// ASSIGN FACULTY TO THE SUBJECT
-	@PostMapping("/admin/assignFaculty/{employeeId}/toSubject")
+	@PutMapping("/admin/assignFaculty/{employeeId}/toSubject")
 	public ResponseEntity<?> assignSubject(@PathVariable("employeeId") int employeeId, @RequestBody Subject subject) {
 		Map<String, Object> result = subjectServices.assignSubjectToFaculty(subject, employeeId);
+		return Response.success(result);
+	}
+
+	@PutMapping("/admin/assignSubjectTo/{employeeId}")
+	public ResponseEntity<?> assignSubToFaculty(@PathVariable("employeeId") int employeeId,
+			@RequestBody SubjectFacultyDTO subject) {
+
+		Map<String, Object> result = subjectServices.assignSubject(subject, employeeId);
 		return Response.success(result);
 	}
 
 	// GET ALL SUBJECTS
 	@GetMapping("/subject/allSubjects")
 	public ResponseEntity<?> allSubjects() {
-		Map<String, Object> result = subjectServices.getAllSubjects();
+		List<Subject> result = subjectServices.getAllSubjects();
 		return Response.success(result);
+	}
+
+	@GetMapping("/getAll/subjects")
+	public List<Subject> subjects() {
+		List<Subject> result = subjectServices.getSubjectList();
+		return result;
 	}
 
 	// GET SUBJECTS IN PARTICULAR DEPARTMENT

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.college.dtos.DtoEntityConverter;
 import com.college.dtos.SubjectDTO;
+import com.college.dtos.SubjectFacultyDTO;
 import com.college.entities.Department;
 import com.college.entities.Staff;
 import com.college.entities.Subject;
@@ -34,10 +35,9 @@ public class SubjectServices {
 	private DepartmentRepository departmentRepository;
 
 	// ADD SUBJECT
-	public Map<String, Object> addSubject(SubjectDTO subjectDto) {
+	public Subject addSubject(SubjectDTO subjectDto) {
 		Subject subject = converter.toSubjectEntity(subjectDto);
-		subject = subjectRepository.save(subject);
-		return Collections.singletonMap("Inserted ID", subject.getSubjectId());
+		return subjectRepository.save(subject);
 	}
 
 	// DELETE SUBJECT
@@ -66,9 +66,15 @@ public class SubjectServices {
 	}
 
 	// GET ALL SUBJECTS
-	public Map<String, Object> getAllSubjects() {
+//	public Map<String, Object> getAllSubjects() {
+//		List<Subject> subjects = subjectRepository.findAll();
+//		return Collections.singletonMap("All SUBJECTS", subjects);
+//	}
+	
+	
+	public List<Subject> getAllSubjects() {
 		List<Subject> subjects = subjectRepository.findAll();
-		return Collections.singletonMap("All SUBJECTS", subjects);
+		return subjects;
 	}
 
 	// GET ALL SUBJECTS FROM A PERTICULAR DEPARTMENT
@@ -85,5 +91,22 @@ public class SubjectServices {
 		List<Subject> subjects = faculty.getSubjects();
 		return Collections.singletonMap("All FACULTY WISE SUBJECTS", subjects);
 
+	}
+
+	public List<Subject> getSubjectList() {
+		List<Subject> allsubs = subjectRepository.findAll();
+		return allsubs;
+	}
+
+	public Map<String, Object> assignSubject(SubjectFacultyDTO subject, int employeeId) {
+		Staff faculty = facultyRepository.getById(employeeId);
+		Department dept = departmentRepository.getById(subject.getDepartmentId());
+		Subject sub = new Subject();
+		sub.setDepartment(dept);
+		sub.setSubjectId(subject.getSubjectId());
+		sub.setSubjectName(subject.getSubjectName());
+		sub.setFaculty(faculty);
+		subjectRepository.save(sub);
+		return Collections.singletonMap("Subject Assigned", sub);
 	}
 }
